@@ -148,7 +148,7 @@ def add_task(task):
 
 def delete_task(index):
     if 0 <= index < len(tasks):
-            removed = task.pop(index)
+            removed = tasks.pop(index)
             print(f"'{removed["할일"]}'삭제완료")
     else:
         print("잘못된 번호입니다.")
@@ -166,14 +166,14 @@ def show_tasks():
 def todo_run():
      while True:
 
-          print("\n[메뉴] 1.추가 2.삭제 3.완료처리 4.전체조회 5.종료")
+          print("[메뉴] 1.추가 2.삭제 3.완료처리 4.전체조회 5.종료")
           choice = get_input("메뉴 번호 선택> ","5")
           if choice == "1":
                name =get_input("할 일을 입력하세요: ", "예: 할일")
                add_task(name)
           elif choice =="2":
                idx = get_input("삭제할 번호: ", "0")
-               delete_task(ini(idx))
+               delete_task(int(idx))
           elif choice == "3":
                idx = get_input("완료 처리 번호 입력> ", "0")
                complete_task(int(idx))
