@@ -187,13 +187,49 @@
 # 정수 배열 arr 2차원 정수 배열 querise의 원소를 query [s,e,k]
 # 쿼리마다 순서대로 s<= i<= e 인 모든 i에 대해 k보다 크면서 가장 작은 arr[i] 찾으시오
 # 쿼리 답이 없으면 -1 출력
-arr =[0, 1, 2, 4, 3]
-queries =[[0, 4, 2],[0, 3, 2],[0, 2, 2]]
-result = [3, 4, -1]
-result =[]
-for i in queries:
-    for j in arr:
-        if i[0]<= j <=i[1] and i[2]<j :
-            min()
-            
-        
+# arr =[0, 1, 2, 4, 3]
+# queries =[[0, 4, 2],[0, 3, 2],[0, 2, 2]]
+# result = [3, 4, -1]
+# result =[]
+# for i in queries:
+#     for j in arr:
+#         if i[0]<= j <=i[1] and i[2]<j :
+#             min()
+# result = []
+# for s,e,k in queries:
+# #     array =[i for i in range(len(arr)) if s<= i <=e and i>k]
+# #     if not min(array):
+# #         result.append(arr[-1])
+# #     else: result.append(arr[min(array)])
+# # print(result)
+#     array = []
+#     array = [arr[i] for i in range(len(arr)) if s<= i <=e and arr[i] > k]
+#     if not array:
+#         result.append(-1)
+#     else: result.append(min(array))
+# print(result)
+#==================================================================
+# 정수 배역 arr 2차원 정수 배열 queries query = [sek]
+# s<= i <= e 인 모든 i중 k의 배수면 arr[i]에 1 더합니다.
+# 쿼리스 처리 후 arr 리턴 함수
+# arr= [0, 1, 2, 4, 3]
+# queries =[[0, 4, 1],[0, 3, 2],[0, 3, 3]]
+# arr =[3, 2, 4, 6, 4]
+# arr =[0,1,2,4,3]
+# for s,e,k in queries:
+#     for i in range(len(arr)):
+#         if s <= i <=e and i % k == 0:
+#             arr[i]+=1
+# print(arr)
+#=================================================================
+#정수 L과 R이 주어졌을때, l이상 r이하의 정수 중에서 숫자 0과 5로만 이루어진 모든
+# 정수를 오름차순으로 저장한 배열을 return하는 solution 함수를 완성해주세요.
+# 그런 정수가 없다면 -1 담긴 배열을 return 합니다.
+
+# 숫자 0과 5로만 이루어진 수를 어떻게 만들 수 있을까?
+
+# 0, 5, 
+# 50, 55, 
+# 500, 505, 550, 555, 
+# 5000, 5005, 5050, 5500, 5055, 5550, 5505, 5555
+# 50000, 50005, 50055, 50550, 55500, 
