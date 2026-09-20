@@ -232,4 +232,27 @@
 # 50, 55, 
 # 500, 505, 550, 555, 
 # 5000, 5005, 5050, 5500, 5055, 5550, 5505, 5555
-# 50000, 50005, 50055, 50550, 55500, 
+# 50000, 50005, 50055, 50550, 55500,
+
+# 배열 만들기 2
+# l = 5
+# r = 555
+# # list_test =[]
+# # list_test2 =[]
+# # temp=[]
+# answer = []
+# # for i in range(l,r+1):
+# #     list_test.append(str(i))
+# # for j in list_test:
+# #     if j == '5' or j =='0':
+# #         list_test2.append(j)
+# for i in range(l,r+1):
+#     zero_five = str(i)
+#     if set(zero_five) <= {'0','5'}:
+#         zero_five=int(zero_five)
+#         answer.append(zero_five)
+#     if not answer:
+#         answer =-1
+# print(answer)
+#=====================================================================
+#
