@@ -299,14 +299,14 @@ select o.customer_name 고객명, round(sum(b.price*o.qty*(1-b.discount_rate/100
 from book_order o
 inner join book b on o.book_id = b.book_id
 group by o.customer_name
-having sum(b.price*o.qty*(1-b.discount_rate/100)) > (select round(avg(고객별총결제금액)) 전체_고객_평균_총결제금액
-														from book_order o,
-															(select o.customer_name, sum(b.price*o.qty*(1-b.discount_rate/100)) 고객별총결제금액
-																from book_order o
-																join book b
-																on b.book_id = o.book_id
-																group by o.customer_name) as totalpay
-														 where totalpay.customer_name = o.customer_name)
+having round(sum(b.price*o.qty*(1-b.discount_rate/100))) > (select round(avg(고객별총결제금액)) 전체_고객_평균_총결제금액
+														from book_order o1,
+															(select o2.customer_name, sum(b2.price*o2.qty*(1-b2.discount_rate/100)) 고객별총결제금액
+																from book_order o2
+																join book b2
+																on b2.book_id = o2.book_id
+																group by o2.customer_name) as totalpay
+														 )
  order by 총결제금액 desc;
 
 # 2차 시도 안됨... 거의 다 왔는데...!
@@ -346,3 +346,39 @@ select round(avg(고객별총결제금액)) 전체_고객_평균_총결제금액
 																group by o.customer_name) as totalpay
 														 where totalpay.customer_name = o.customer_name;
  -- -------------------------------------------
+# => 강사님 풀이
+SELECT customer_name AS 고객명, 총결제금액
+FROM (
+  SELECT c.customer_name AS customer_name, SUM(o.qty*bk.price*(1-bk.discount_rate/100)) AS 총결제금액
+  FROM book_order o
+  JOIN book bk ON o.book_id = bk.book_id
+  JOIN customer c ON o.customer_name = c.customer_name
+  GROUP BY c.customer_name
+) t
+WHERE 총결제금액 > (
+  SELECT AVG(sub.총결제금액) FROM (
+    SELECT SUM(o.qty*bk.price*(1-bk.discount_rate/100)) AS 총결제금액
+    FROM book_order o JOIN book bk ON o.book_id = bk.book_id
+    GROUP BY o.customer_name
+  ) sub
+)
+ORDER BY 총결제금액 DESC;
+-- =============================================================================
+# => 서브쿼리 수정본.
+SELECT 
+    o.customer_name AS 고객명, 
+    ROUND(SUM(b.price * o.qty * (1 - b.discount_rate / 100))) AS 총결제금액
+FROM book_order o
+INNER JOIN book b ON o.book_id = b.book_id
+GROUP BY o.customer_name
+HAVING SUM(b.price * o.qty * (1 - b.discount_rate / 100)) > (
+    -- 바깥 쿼리와 독립적으로 전체 고객의 평균을 구하는 스칼라 서브쿼리
+    SELECT AVG(totalpay.고객별총결제금액)
+    FROM (
+        SELECT SUM(b.price * o.qty * (1 - b.discount_rate / 100)) AS 고객별총결제금액
+        FROM book_order o
+        JOIN book b ON b.book_id = o.book_id
+        GROUP BY o.customer_name
+    ) AS totalpay
+)
+ORDER BY 총결제금액 DESC;
